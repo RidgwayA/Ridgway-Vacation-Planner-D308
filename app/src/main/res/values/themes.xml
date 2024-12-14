@@ -1,0 +1,10 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.RidgwayVacationPlannerD308" parent="Theme.Material3.DayNight">
+        <!-- Made change to line 3 so tool bar is active -->
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.RidgwayVacationPlannerD308" parent="Base.Theme.RidgwayVacationPlannerD308" />
+</resources>

@@ -2,6 +2,7 @@ package com.example.ridgwayvacationplanner_d308.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ridgwayvacationplanner_d308.R;
 import com.example.ridgwayvacationplanner_d308.UI.VacationDetails;
+import com.example.ridgwayvacationplanner_d308.entities.Excursion;
 import com.example.ridgwayvacationplanner_d308.entities.Vacation;
 
 import java.util.List;
@@ -19,27 +21,33 @@ import java.util.List;
 public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.VacationViewHolder>{
 
     private List<Vacation> mVacations;
+    private List<Excursion> mExcursions;
     private final Context context;
     private final LayoutInflater mInflater;
 
     public class VacationViewHolder extends RecyclerView.ViewHolder {
         private final TextView vacationItemView;
+
         public VacationViewHolder(@NonNull View itemView) {
             super(itemView);
             vacationItemView = itemView.findViewById(R.id.textViewVacationItem);
-            itemView.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view){
-                    int position = getAdapterPosition();
-                    final Vacation current = mVacations.get(position);
-                    Intent intent = new Intent(context, VacationDetails.class);
-                    intent.putExtra("Vacation ID", current.getVacationID());
-                    intent.putExtra("vacation Name", current.getVacationTitle());
-                    intent.putExtra("Hotel Name", current.getVacationLodging());
-                    intent.putExtra("Start Date", current.getStartDate());
-                    intent.putExtra("End Date", current.getEndDate());
-                    context.startActivity(intent);
-                }
+
+            itemView.setOnClickListener(view -> {
+                int position = getAdapterPosition();
+                final Vacation current = mVacations.get(position);
+
+                // Logs to debug clicked vacation data
+                Log.d("VacationAdapter", "Clicked position: " + position);
+                Log.d("VacationAdapter", "Vacation ID being passed: " + current.getVacationID());
+                Log.d("VacationAdapter", "Vacation Title being passed: " + current.getVacationTitle());
+
+                Intent intent = new Intent(context, VacationDetails.class);
+                intent.putExtra("vacationId", current.getVacationID());
+                intent.putExtra("vacationName", current.getVacationTitle());
+                intent.putExtra("hotelName", current.getVacationLodging());
+                intent.putExtra("startdate", current.getStartDate());
+                intent.putExtra("enddate", current.getEndDate());
+                context.startActivity(intent);
             });
         }
     }
@@ -78,6 +86,11 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
 
     public void setVacations(List<Vacation> vacations){
         mVacations = vacations;
+        notifyDataSetChanged();
+    }
+
+    public void setExcursions(List<Excursion> excursions){
+        mExcursions = excursions;
         notifyDataSetChanged();
     }
 

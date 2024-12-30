@@ -1,6 +1,7 @@
 package com.example.ridgwayvacationplanner_d308.database;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.example.ridgwayvacationplanner_d308.dao.ExcursionDAO;
 import com.example.ridgwayvacationplanner_d308.dao.VacationDAO;
@@ -27,18 +28,22 @@ public class Repository {
         mExcursionDAO = db.excursionDAO();
         mVacationDAO = db.vacationDAO();
     }
-// retrieves or creates vacations from the db
-    public List<Vacation> getmAllVacations(){
-        databaseExecutor.execute(() -> {
-            mAllVacations = mVacationDAO.getAllVacations();
-        });
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+// retrieves or creates vacations from the db with logging for debugging
+public List<Vacation> getmAllVacations() {
+    databaseExecutor.execute(() -> {
+        mAllVacations = mVacationDAO.getAllVacations();
+        Log.d("Repository", "Vacations retrieved: " + mAllVacations.size());
+        for (Vacation vacation : mAllVacations) {
+            Log.d("Repository", "Vacation - ID: " + vacation.getVacationID() + ", Title: " + vacation.getVacationTitle());
         }
-        return mAllVacations;
+    });
+    try {
+        Thread.sleep(1000);
+    } catch (InterruptedException e) {
+        e.printStackTrace();
     }
+    return mAllVacations;
+}
 // Method for vacation creation
     public void insert (Vacation vacation) {
         databaseExecutor.execute(() -> {

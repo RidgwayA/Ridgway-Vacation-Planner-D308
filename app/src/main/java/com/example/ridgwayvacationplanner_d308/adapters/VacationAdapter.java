@@ -2,7 +2,6 @@ package com.example.ridgwayvacationplanner_d308.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,11 +34,6 @@ public class VacationAdapter extends RecyclerView.Adapter<VacationAdapter.Vacati
             itemView.setOnClickListener(view -> {
                 int position = getAdapterPosition();
                 final Vacation current = mVacations.get(position);
-
-                // Logs to debug clicked vacation data
-                Log.d("VacationAdapter", "Clicked position: " + position);
-                Log.d("VacationAdapter", "Vacation ID being passed: " + current.getVacationID());
-                Log.d("VacationAdapter", "Vacation Title being passed: " + current.getVacationTitle());
 
                 Intent intent = new Intent(context, VacationDetails.class);
                 intent.putExtra("vacationId", current.getVacationID());

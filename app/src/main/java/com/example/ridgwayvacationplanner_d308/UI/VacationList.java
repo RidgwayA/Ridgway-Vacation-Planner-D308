@@ -16,7 +16,6 @@ import com.example.ridgwayvacationplanner_d308.R;
 import com.example.ridgwayvacationplanner_d308.adapters.VacationAdapter;
 import com.example.ridgwayvacationplanner_d308.database.Repository;
 import com.example.ridgwayvacationplanner_d308.entities.Vacation;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -17,8 +18,6 @@ public class AlertReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String alertMessage = intent.getStringExtra("alertMessage");
-
-        Log.d("AlertReceiver", "Received alert: " + alertMessage);
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -46,7 +45,7 @@ public class AlertReceiver extends BroadcastReceiver {
         try {
             notificationManager.notify((int) System.currentTimeMillis(), builder.build());
         } catch (SecurityException e) {
-            Log.e("AlertReceiver", "Notification permission not granted", e);
+            Toast.makeText(context, "Notification permission not granted. Please enable it in settings.", Toast.LENGTH_LONG).show();
         }
     }
 

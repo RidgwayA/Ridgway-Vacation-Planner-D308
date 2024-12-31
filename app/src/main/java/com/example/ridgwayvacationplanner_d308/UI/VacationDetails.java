@@ -139,6 +139,15 @@ public class VacationDetails extends AppCompatActivity {
         excursionAdapter.setExcursions(filteredExcursions);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            setupRecyclerView();
+        }
+    }
+
     // Sets up button actions for saving, deleting, and navigating to excursion details
     private void setupActionButtons() {
         Button saveButton = findViewById(R.id.saveButton);
@@ -150,11 +159,19 @@ public class VacationDetails extends AppCompatActivity {
         excursionButton.setOnClickListener(v -> navigateToExcursionDetails());
     }
 
-    // Navigates to the ExcursionDetails activity
     private void navigateToExcursionDetails() {
+        if (currentVacation == null) {
+            Toast.makeText(this, "No vacation selected", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         Intent intent = new Intent(VacationDetails.this, ExcursionDetails.class);
         intent.putExtra("vacationId", vacationId);
-        startActivity(intent);
+        intent.putExtra("vacationName", currentVacation.getVacationTitle());
+        intent.putExtra("startdate", currentVacation.getStartDate());
+        intent.putExtra("enddate", currentVacation.getEndDate());
+        intent.putExtra("hotelName", currentVacation.getVacationLodging());
+        startActivityForResult(intent, 1);
     }
 
     // Sets up date pickers for start and end dates
@@ -218,25 +235,27 @@ public class VacationDetails extends AppCompatActivity {
     // Deletes the current vacation, ensuring no associated excursions exist
     private void deleteVacation() {
         if (currentVacation == null) {
-            Toast.makeText(this, "Vacation not found", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "No vacation selected", Toast.LENGTH_SHORT).show();
             return;
         }
 
-//      CODE BELOW SHOULD ENSURE NO EXCURSIONS ARE ASSOCIATED WITH A VACATION BEFORE DELETION
-//      CHECK AFTER IMPLEMENTATION OF EXCURSIONS
+        List<Excursion> associatedExcursions = new ArrayList<>();
+        for (Excursion excursion : repository.getmAllExcursions()) {
+            if (excursion.getVacationID() == vacationId) {
+                associatedExcursions.add(excursion);
+            }
+        }
 
-//        List<Excursion> excursions = repository.getmAllExcursions();
-//        for (Excursion excursion : excursions) {
-//            if (excursion.getVacationID() == vacationId) {
-//                Toast.makeText(this, "Cannot delete vacation with associated excursions", Toast.LENGTH_LONG).show();
-//                return;
-//            }
-//        }
+        if (!associatedExcursions.isEmpty()) {
+            Toast.makeText(this, "Cannot delete vacation with associated excursions. Please delete the excursions first.", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         repository.delete(currentVacation);
-        Toast.makeText(this, "Vacation deleted successfully", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Vacation deleted successfully", Toast.LENGTH_SHORT).show();
         finish();
     }
+
 
     // Schedules an alert for the vacation start or end date
     private void setAlert() {
@@ -295,17 +314,34 @@ public class VacationDetails extends AppCompatActivity {
             return;
         }
 
-        String shareText = String.format(
-                "Vacation Details:\n\nName: %s\nHotel: %s\nStart Date: %s\nEnd Date: %s",
+        StringBuilder shareText = new StringBuilder();
+        shareText.append(String.format(
+                "Vacation Details:\n\nName: %s\nHotel: %s\nStart Date: %s\nEnd Date: %s\n\n",
                 currentVacation.getVacationTitle(),
                 currentVacation.getVacationLodging(),
                 currentVacation.getStartDate(),
                 currentVacation.getEndDate()
-        );
+        ));
+
+        List<Excursion> filteredExcursions = new ArrayList<>();
+        for (Excursion excursion : repository.getmAllExcursions()) {
+            if (excursion.getVacationID() == vacationId) {
+                filteredExcursions.add(excursion);
+            }
+        }
+
+        if (!filteredExcursions.isEmpty()) {
+            shareText.append("Excursions:\n");
+            for (Excursion excursion : filteredExcursions) {
+                shareText.append(String.format("- %s (%s)\n", excursion.getExcursionTitle(), excursion.getExcursionDate()));
+            }
+        } else {
+            shareText.append("Excursions:\nNone\n");
+        }
 
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, shareText.toString());
         startActivity(Intent.createChooser(shareIntent, "Share vacation details via"));
     }
 }

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Excursion Date Input -->
+
+    <TextView
+        android:id="@+id/vacationDetailsText"
+        android:layout_width="275dp"
+        android:layout_height="192dp"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:text="Vacation Details"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/excursionNameInput"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/excursionNameInput"
+        android:layout_width="356dp"
+        android:layout_height="53dp"
+        android:layout_margin="8dp"
+        android:hint="Excursion Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="152dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="20dp"
+        android:text="Excursion Date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.008"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/excursionNameInput" />
+
+    <TextView
+        android:id="@+id/excursionDateInput"
+        android:layout_width="222dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="20dp"
+        android:hint="Click to change excursion date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.172"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/excursionNameInput" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/excursionRecyclerView"
+        android:layout_width="825dp"
+        android:layout_height="209dp"
+        android:layout_marginTop="204dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.073"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="571dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="156dp"
+        android:padding="8dp"
+        android:text="Current Excursions"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+        android:id="@+id/setAlertButton"
+        android:layout_width="155dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="156dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/button"
+        android:text="Set Alert"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toEndOf="@+id/deleteExcursionButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/editExcursionButton"
+        android:layout_width="155dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="84dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/button"
+        android:text="Edit Excursion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/addExcursionButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/deleteExcursionButton"
+        android:layout_width="155dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="156dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/button"
+        android:text="Delete Excursion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.738"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/addExcursionButton"
+        android:layout_width="155dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="84dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/button"
+        android:text="Add Excursion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.737"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+        android:id="@+id/cancelEditButton"
+        android:layout_width="155dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="84dp"
+        android:layout_weight="1"
+        android:backgroundTint="@color/button"
+        android:text="Cancel Edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/addExcursionButton"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +34,7 @@ public class ExcursionDetails extends AppCompatActivity {
     private int vacationId;
     private String vacationName, vacationStartDate, vacationEndDate, hotelName;
     private Repository repository;
-    private EditText excursionNameInput, excursionDateInput;
+    private TextView excursionNameInput, excursionDateInput;
     private RecyclerView excursionRecyclerView;
     private ExcursionAdapter adapter;
 
@@ -67,6 +68,17 @@ public class ExcursionDetails extends AppCompatActivity {
         finish();
         return true;
     }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.activity_excursion_details);
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            setContentView(R.layout.activity_excursion_details);
+        }
+        initViews();
+        setupRecyclerView();
+    }
 
     private void initViews() {
         TextView vacationDetailsText = findViewById(R.id.vacationDetailsText);
@@ -88,6 +100,7 @@ public class ExcursionDetails extends AppCompatActivity {
                 vacationName, hotelName, vacationStartDate, vacationEndDate
         ));
     }
+
 
     private void setupRecyclerView() {
         excursionRecyclerView = findViewById(R.id.excursionRecyclerView);
